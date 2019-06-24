@@ -152,18 +152,38 @@ end
 # end
 # good_practices
 
-def num_points_scored(player_name)
-  game_hash.collect do |location, team_data|
-    team_data[:players].collect do |attribute, data|
-      attribute.collect do |key, value|
-        #binding.pry
-        if key == player_name
-          return value[:points]
-        end
-      end
-    end
-  end
+def get_all_players
+  game_hash[:home][:players] + game_hash[:away][:players]
 end
+
+def num_points_scored(player_name)
+  get_all_players.find do |player_hash|
+    player_hash[:player_name] == player_name
+  end[:points]
+end
+
+# def num_points_scored(player_name)
+#   good_player = nil
+#   game_hash.each do |team_location, team_info|
+#     binding.pry
+#     good_player = team_info[:players].find do |player_hash|
+#       player_hash[:player_name] == player_nane
+#     end
+#   end
+# end
+
+# def num_points_scored(player_name)
+#   game_hash.collect do |location, team_data|
+#     team_data[:players].collect do |attribute, data|
+#       attribute.collect do |key, value|
+#         #binding.pry
+#         if key == player_name
+#           return value[:points]
+#         end
+#       end
+#     end
+#   end
+# end
 
 def shoe_size(player_name)
   game_hash.collect do |home_or_away, team_info|
